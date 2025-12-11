@@ -4,6 +4,9 @@ import { logger } from "hono/logger";
 import { subscription } from "./routes/subscription";
 import { user } from "./routes/user";
 import "./db";
+import { migrateDatabase } from "./lib/migrate";
+
+await migrateDatabase();
 
 const app = new Hono();
 
