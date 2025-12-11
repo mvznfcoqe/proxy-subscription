@@ -1,3 +1,4 @@
+import { DisabledReason, SubscriptionStatus } from "@sub/shared";
 import {
 	bigint,
 	pgEnum,
@@ -8,13 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-export enum SubscriptionStatus {
-	INITIAL = "initial",
-	WAITING = "waiting",
-	ACTIVE = "active",
-	DISABLED = "disabled",
-	REJECTED = "rejected",
-}
+export { DisabledReason, SubscriptionStatus };
 
 export const subscriptionStatusEnum = pgEnum("subscription_status", [
 	SubscriptionStatus.INITIAL,
@@ -23,11 +18,6 @@ export const subscriptionStatusEnum = pgEnum("subscription_status", [
 	SubscriptionStatus.DISABLED,
 	SubscriptionStatus.REJECTED,
 ]);
-
-export enum DisabledReason {
-	UNSUBSCRIBED = "unsubscribed",
-	FRAUD = "fraud",
-}
 
 export const disabledReasonEnum = pgEnum("disabled_reason", [
 	DisabledReason.UNSUBSCRIBED,

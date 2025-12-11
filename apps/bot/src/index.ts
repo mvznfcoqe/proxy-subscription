@@ -1,8 +1,5 @@
-import {
-	DisabledReason,
-	SubscriptionStatus,
-	type User,
-} from "@sub/backend/types";
+import type { User } from "@sub/backend/types";
+import { DisabledReason, SubscriptionStatus } from "@sub/shared";
 import { Bot, type Context } from "grammy";
 import {
 	createSubscription,

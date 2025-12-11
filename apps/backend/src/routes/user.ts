@@ -1,14 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
+import { SubscriptionStatus } from "@sub/shared";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { remnaClient } from "~/api/remna";
 import { db } from "~/db";
-import {
-	insertUserSchema,
-	SubscriptionStatus,
-	selectUserSchema,
-	users,
-} from "~/db/schema";
+import { insertUserSchema, selectUserSchema, users } from "~/db/schema";
 import { getUserById, getUserByTelegramId } from "~/services/user";
 
 const createUserSchema = insertUserSchema.pick({
