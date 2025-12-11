@@ -1,7 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { remnaClient } from "~/api/remna";
 import { db } from "~/db";
 import {
@@ -30,7 +29,7 @@ export const user = new Hono()
 		});
 
 		if (existingUser) {
-			throw new HTTPException(409, { message: "User already exists" });
+			return ctx.json({ message: "User already exists" }, 409);
 		}
 
 		const createdUsers = await db
@@ -48,12 +47,12 @@ export const user = new Hono()
 	.get("/telegram/:telegramId", async (ctx) => {
 		const telegramId = Number(ctx.req.param("telegramId"));
 
-		const foundUser = await getUserByTelegramId(telegramId);
+		const foundUser = await getUserByTelegramId(telegramId).catch((err) =>
+			console.error(err, "123"),
+		);
 
 		if (!foundUser) {
-			throw new HTTPException(404, {
-				message: "User not found",
-			});
+			return ctx.json({ message: "User not found" }, 404);
 		}
 
 		return ctx.json(foundUser);
@@ -68,7 +67,7 @@ export const user = new Hono()
 			const foundUser = await getUserById(id);
 
 			if (!foundUser) {
-				throw new HTTPException(404, { message: "User not found" });
+				return ctx.json({ message: "User not found" }, 404);
 			}
 
 			await remnaClient.users.updateByUuidOrUsername({

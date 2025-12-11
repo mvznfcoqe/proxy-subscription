@@ -1,0 +1,80 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    network_mode: service:backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/sub
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+
+  backend:
+    build:
+      context: ../apps/backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/sub
+      - REMNAWAVE_PANEL_URL=${REMNAWAVE_PANEL_URL}
+      - REMNAWAVE_API_KEY=${REMNAWAVE_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../apps/backend:/app:cached
+    command: bun run dev
+
+  bot:
+    build:
+      context: ../apps/bot
+    ports:
+      - "3001:3001"
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - ADMIN_ID=${ADMIN_ID}
+      - CHANNEL_ID=${CHANNEL_ID}
+      - CHANNEL_LINK=${CHANNEL_LINK}
+      - BACKEND_URL=http://backend:3000
+    depends_on:
+      - backend
+    volumes:
+      - ../apps/bot:/app:cached
+    command: bun run dev
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=sub
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres-data:
+  redis-data:

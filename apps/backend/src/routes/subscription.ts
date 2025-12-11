@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { nanoid } from "nanoid";
 import { remnaClient } from "~/api/remna";
 import { DataLimitBySqualLevel, InternalSquadLevels } from "~/config/remna";
@@ -16,13 +15,13 @@ export const subscription = new Hono()
 		const id = Number(ctx.req.param("id"));
 
 		if (Number.isNaN(id)) {
-			throw new HTTPException(400, { message: "Invalid user ID" });
+			return ctx.json({ message: "Invalid user ID" }, 400);
 		}
 
 		const user = await getUserById(id);
 
 		if (!user) {
-			throw new HTTPException(404, { message: "User not found" });
+			return ctx.json({ message: "User not found" }, 404);
 		}
 
 		const foundSubscription = await remnaClient.users
@@ -31,7 +30,7 @@ export const subscription = new Hono()
 			.catch(() => null);
 
 		if (!foundSubscription) {
-			throw new HTTPException(404, { message: "Subscription not found" });
+			return ctx.json({ message: "Subscription not found" }, 404);
 		}
 
 		return ctx.json(foundSubscription);
@@ -44,7 +43,7 @@ export const subscription = new Hono()
 		const user = await getUserById(id);
 
 		if (!user) {
-			throw new HTTPException(404, { message: "User not found" });
+			return ctx.json({ message: "User not found" }, 404);
 		}
 
 		const createdSubscription = await remnaClient.users.create({
