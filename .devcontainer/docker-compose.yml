@@ -16,7 +16,8 @@ services:
 
   backend:
     build:
-      context: ../apps/backend
+      context: ..
+      dockerfile: apps/backend/Dockerfile
     ports:
       - "3000:3000"
     environment:
@@ -27,12 +28,14 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ../apps/backend:/app:cached
+      - ../apps/backend:/app/apps/backend:cached
+      - ../packages/shared:/app/packages/shared:cached
     command: bun run dev
 
   bot:
     build:
-      context: ../apps/bot
+      context: ..
+      dockerfile: apps/bot/Dockerfile
     ports:
       - "3001:3001"
     environment:
@@ -44,7 +47,8 @@ services:
     depends_on:
       - backend
     volumes:
-      - ../apps/bot:/app:cached
+      - ../apps/bot:/app/apps/bot:cached
+      - ../packages/shared:/app/packages/shared:cached
     command: bun run dev
 
   postgres:
