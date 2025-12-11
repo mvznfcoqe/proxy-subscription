@@ -1,0 +1,22 @@
+{
+	"name": "sub",
+	"version": "1.0.0",
+	"private": true,
+	"workspaces": [
+		"apps/*"
+	],
+	"scripts": {
+		"dev:backend": "cd apps/backend && bun run dev",
+		"start:backend": "cd apps/backend && bun run start",
+		"generate:backend": "cd apps/backend && bun run generate",
+		"dev:bot": "cd apps/bot && bun run dev",
+		"start:bot": "cd apps/bot && bun run start"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.8",
+		"@types/bun": "latest"
+	},
+	"dependencies": {
+		"@mishkat/remnawave-sdk": "^1.2.2"
+	}
+}
