@@ -6,50 +6,15 @@ services:
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
-    network_mode: service:backend
+    ports:
+      - "3000:3000"
+      - "3001:3001"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/sub
       - REDIS_URL=redis://redis:6379
     depends_on:
       - postgres
       - redis
-
-  backend:
-    build:
-      context: ..
-      dockerfile: apps/backend/Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/sub
-      - REMNAWAVE_PANEL_URL=${REMNAWAVE_PANEL_URL}
-      - REMNAWAVE_API_KEY=${REMNAWAVE_API_KEY}
-    depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - ../apps/backend:/app/apps/backend:cached
-      - ../packages/shared:/app/packages/shared:cached
-    command: bun run dev
-
-  bot:
-    build:
-      context: ..
-      dockerfile: apps/bot/Dockerfile
-    ports:
-      - "3001:3001"
-    environment:
-      - BOT_TOKEN=${BOT_TOKEN}
-      - ADMIN_ID=${ADMIN_ID}
-      - CHANNEL_ID=${CHANNEL_ID}
-      - CHANNEL_LINK=${CHANNEL_LINK}
-      - BACKEND_URL=http://backend:3000
-    depends_on:
-      - backend
-    volumes:
-      - ../apps/bot:/app/apps/bot:cached
-      - ../packages/shared:/app/packages/shared:cached
-    command: bun run dev
 
   postgres:
     image: postgres:16-alpine
