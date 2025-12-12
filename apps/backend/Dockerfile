@@ -10,4 +10,4 @@ EXPOSE 3000
 
 WORKDIR /app/apps/backend
 
-CMD ["bun", "run", "--cwd", "apps/backend", "start"]
+CMD ["bun", "run", "start"]
