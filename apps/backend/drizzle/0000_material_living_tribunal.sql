@@ -1,6 +1,14 @@
-CREATE TYPE "public"."disabled_reason" AS ENUM('unsubscribed', 'fraud');--> statement-breakpoint
-CREATE TYPE "public"."subscription_status" AS ENUM('initial', 'waiting', 'active', 'disabled', 'rejected');--> statement-breakpoint
-CREATE TABLE "users" (
+DO $$ BEGIN
+	CREATE TYPE "public"."disabled_reason" AS ENUM('unsubscribed', 'fraud');
+EXCEPTION
+	WHEN duplicate_object THEN null;
+END $$;
+DO $$ BEGIN
+	CREATE TYPE "public"."subscription_status" AS ENUM('initial', 'waiting', 'active', 'disabled', 'rejected');
+EXCEPTION
+	WHEN duplicate_object THEN null;
+END $$;
+CREATE TABLE IF NOT EXISTS "users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"username" text NOT NULL,
 	"telegram_id" bigint NOT NULL,
