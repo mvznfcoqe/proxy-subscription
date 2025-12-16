@@ -26,6 +26,7 @@ export const disabledReasonEnum = pgEnum("disabled_reason", [
 
 export const users = pgTable("users", {
 	id: serial("id").primaryKey().notNull(),
+	panelId: bigint("panel_id", { mode: "number" }).notNull().unique(),
 	username: text("username").notNull().unique(),
 	telegramId: bigint("telegram_id", { mode: "number" }).notNull().unique(),
 	subscriptionStatus: subscriptionStatusEnum("subscription_status")

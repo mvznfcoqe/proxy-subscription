@@ -7,4 +7,3 @@ dist/
 build/
 coverage/
 *.tsbuildinfo
-apps/backend/src/api/generated
