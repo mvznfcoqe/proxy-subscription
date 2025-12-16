@@ -16,10 +16,7 @@ import { getOrCreateUserByTelegramId } from "./services/user.ts";
 
 const bot = new Bot(env.BOT_TOKEN);
 
-const getMessageWithSubscription = async (
-	telegramId: number,
-	username: string,
-) => {
+const getMessageWithSubscription = async (telegramId: number) => {
 	try {
 		const user = await getUserByTelegramId(telegramId);
 
@@ -143,7 +140,7 @@ const handleUserMessage = async (ctx: Context) => {
 		return;
 	}
 
-	const message = await getMessageWithSubscription(botUser.id, user.username);
+	const message = await getMessageWithSubscription(botUser.id);
 
 	ctx.reply(message, { parse_mode: "HTML" });
 };
