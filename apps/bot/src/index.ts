@@ -34,7 +34,7 @@ const getMessageWithSubscription = async (
 		}
 
 		return `
-Привет, <a href="tg://user?id=${telegramId}">${username}</a>.
+Привет
 Твоя подписка:
 ${subscriptionURL}
   `;
