@@ -11,5 +11,9 @@ export const getSubscriptionByTelegramId = async (telegramId: number) => {
 
 	const foundUser = data.response[0];
 
-	return { subscriptionURL: foundUser.subscriptionUrl };
+	if (!foundUser) {
+		return null;
+	}
+
+	return foundUser;
 };

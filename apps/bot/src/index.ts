@@ -27,10 +27,10 @@ const getMessageWithSubscription = async (
 
 		try {
 			const subscription = await getSubscription(user.id);
-			subscriptionURL = subscription.subscriptionURL;
+			subscriptionURL = subscription.subscriptionUrl;
 		} catch {
 			const newSubscription = await createSubscription(user.id);
-			subscriptionURL = newSubscription.subscriptionURL;
+			subscriptionURL = newSubscription.subscriptionUrl;
 		}
 
 		return `

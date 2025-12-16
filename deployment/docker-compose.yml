@@ -38,6 +38,8 @@ services:
       REDIS_URL: redis://redis:6379
       REMNAWAVE_PANEL_URL: ${REMNAWAVE_PANEL_URL}
       REMNAWAVE_API_KEY: ${REMNAWAVE_API_KEY}
+      FREE_SQUAD_UUID: ${FREE_SQUAD_UUID}
+      PAID_SQUAD_UUID: ${PAID_SQUAD_UUID}
     depends_on:
       postgres:
         condition: service_healthy

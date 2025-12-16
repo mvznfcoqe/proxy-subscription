@@ -21,19 +21,26 @@ export const user = new Hono()
 	.post("/", zValidator("json", createUserSchema), async (ctx) => {
 		const { telegramId } = ctx.req.valid("json");
 
-		const existingUser = await db.query.users.findFirst({
-			where: eq(users.telegramId, telegramId),
-		});
+		const existingUser = await getUserByTelegramId(telegramId);
 
 		if (existingUser) {
 			return ctx.json({ message: "User already exists" }, 409);
 		}
+
+		const subscription = await getSubscriptionByTelegramId(telegramId);
+
+		const isUserHasValidSubscription =
+			subscription?.id && subscription.status === "ACTIVE";
 
 		const createdUsers = await db
 			.insert(users)
 			.values({
 				telegramId: telegramId,
 				username: telegramId.toString(),
+				subscriptionId: subscription?.id,
+				subscriptionStatus: isUserHasValidSubscription
+					? SubscriptionStatus.ACTIVE
+					: SubscriptionStatus.INITIAL,
 			})
 			.returning();
 
@@ -44,7 +51,7 @@ export const user = new Hono()
 	.get("/telegram/:telegramId", async (ctx) => {
 		const telegramId = Number(ctx.req.param("telegramId"));
 
-		const foundUser = await getUserByTelegramId(telegramId).catch(() => null);
+		const foundUser = await getUserByTelegramId(telegramId);
 
 		if (!foundUser) {
 			return ctx.json({ message: "User not found" }, 404);

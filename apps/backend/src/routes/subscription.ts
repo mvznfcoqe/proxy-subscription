@@ -1,9 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
+import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
 import { usersControllerCreateUser } from "~/api/generated/remnawave";
-import { DataLimitBySqualLevel, InternalSquadLevels } from "~/config/remna";
-import { selectUserSchema } from "~/db/schema";
+import { DataLimitBySqualLevel, Levels } from "~/config/remna";
+import { db } from "~/db";
+import { selectUserSchema, users } from "~/db/schema";
 import { getSubscriptionByTelegramId } from "~/services/subscription";
 import { getUserById } from "~/services/user";
 
@@ -52,14 +54,8 @@ export const subscription = new Hono()
 				status: "ACTIVE",
 				username: user.telegramId.toString().slice(0, 36),
 				telegramId: user.telegramId,
-				activeInternalSquads: [
-					InternalSquadLevels[user.level as keyof typeof InternalSquadLevels],
-				],
-				trafficLimitBytes:
-					DataLimitBySqualLevel[
-						user.level as keyof typeof DataLimitBySqualLevel
-					] *
-					1024 ** 3,
+				activeInternalSquads: [Levels.free],
+				trafficLimitBytes: DataLimitBySqualLevel.free * 1024 ** 3,
 				trafficLimitStrategy: "MONTH",
 				shortUuid: nanoid(128),
 			},
@@ -71,7 +67,12 @@ export const subscription = new Hono()
 
 		const createdSubscription = data.response;
 
+		await db
+			.update(users)
+			.set({ subscriptionId: createdSubscription.id })
+			.where(eq(users.id, user.id));
+
 		ctx.status(201);
 
-		return ctx.json({ subscriptionURL: createdSubscription.subscriptionUrl });
+		return ctx.json(createdSubscription);
 	});

@@ -1,9 +1,11 @@
-export type Level = 1;
+import { env } from "~/env";
 
-export const InternalSquadLevels = {
-	1: "2b387384-2a90-46db-8f8c-bb7c9753ccb8",
-} as const;
+export const Levels = {
+	free: env.FREE_SQUAD_UUID,
+	paid: env.PAID_SQUAD_UUID,
+};
 
 export const DataLimitBySqualLevel = {
-	1: 100,
+	free: 100,
+	paid: 1200,
 } as const;
