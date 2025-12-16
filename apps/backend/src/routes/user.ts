@@ -2,9 +2,10 @@ import { zValidator } from "@hono/zod-validator";
 import { SubscriptionStatus } from "@sub/shared";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { remnaClient } from "~/api/remna";
+import { usersControllerUpdateUser } from "~/api/generated/remnawave";
 import { db } from "~/db";
 import { insertUserSchema, selectUserSchema, users } from "~/db/schema";
+import { getSubscriptionByTelegramId } from "~/services/subscription";
 import { getUserById, getUserByTelegramId } from "~/services/user";
 
 const createUserSchema = insertUserSchema.pick({
@@ -43,9 +44,7 @@ export const user = new Hono()
 	.get("/telegram/:telegramId", async (ctx) => {
 		const telegramId = Number(ctx.req.param("telegramId"));
 
-		const foundUser = await getUserByTelegramId(telegramId).catch((err) =>
-			console.error(err, "123"),
-		);
+		const foundUser = await getUserByTelegramId(telegramId).catch(() => null);
 
 		if (!foundUser) {
 			return ctx.json({ message: "User not found" }, 404);
@@ -66,13 +65,21 @@ export const user = new Hono()
 				return ctx.json({ message: "User not found" }, 404);
 			}
 
-			await remnaClient.users.updateByUuidOrUsername({
-				username: foundUser.username,
-				status:
-					subscriptionStatus === SubscriptionStatus.ACTIVE
-						? "ACTIVE"
-						: "DISABLED",
-			});
+			const userSubscription = await getSubscriptionByTelegramId(
+				foundUser.telegramId,
+			);
+
+			if (userSubscription) {
+				await usersControllerUpdateUser({
+					body: {
+						username: foundUser.username,
+						status:
+							subscriptionStatus === SubscriptionStatus.ACTIVE
+								? "ACTIVE"
+								: "DISABLED",
+					},
+				});
+			}
 
 			if (subscriptionStatus === SubscriptionStatus.DISABLED) {
 				console.warn(
