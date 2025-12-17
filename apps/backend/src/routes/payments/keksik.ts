@@ -27,7 +27,7 @@ export const paymentsKeksikRoute = new Hono().post(
 	zValidator("json", keksikCallbackSchema, (result, ctx) => {
 		if (!result.success) {
 			logger.error(
-				`Keksik callback validation failed: ${JSON.stringify(result.error.issues)}`,
+				`Keksik callback validation failed: ${JSON.stringify(result.error.issues)}. Received data: ${JSON.stringify(ctx.req.json())}`,
 			);
 
 			return ctx.status(400);
