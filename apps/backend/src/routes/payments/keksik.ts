@@ -24,10 +24,12 @@ const keksikCallbackSchema = z.object({
 
 export const paymentsKeksikRoute = new Hono().post("/", async (ctx) => {
 	console.log(ctx);
-	console.log(ctx.req.json());
-	console.log(ctx.req.text());
-	console.log(ctx.req.queries());
-	console.log(ctx.req.param());
+	console.log(await ctx.req.json());
+	console.log(await ctx.req.text());
+	console.log(await ctx.req.formData());
+	console.log(ctx.req.url);
+	console.log(await ctx.req.parseBody());
+	console.log(ctx.req.raw);
 	// const { type, data } = ctx.req.valid("form");
 
 	// if (type === "confirmation") {
