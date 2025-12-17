@@ -18,7 +18,7 @@ const keksikDonationSchema = z.object({
 const keksikNewDonateSchema = z.array(keksikDonationSchema);
 
 export const paymentsKeksikRoute = new Hono()
-	.post("/confirmation", async (ctx) => {
+	.get("/", async (ctx) => {
 		return ctx.json({ status: "ok", code: env.KEKSIK_CONFIRMATION_CODE });
 	})
 	.post(
