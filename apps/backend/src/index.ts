@@ -6,6 +6,7 @@ import { user } from "./routes/user";
 import "./db";
 import { migrateDatabase } from "./lib/migrate";
 import "./api/remnawave";
+import { paymentsKeksikRoute } from "./routes/payments/keksik";
 
 await migrateDatabase();
 
@@ -14,7 +15,10 @@ const app = new Hono();
 app.use("*", logger());
 app.use("*", cors());
 
-const routes = app.route("/user", user).route("/subscription", subscription);
+const routes = app
+	.route("/user", user)
+	.route("/subscription", subscription)
+	.route("/payments/keksik", paymentsKeksikRoute);
 
 export type AppType = typeof routes;
 

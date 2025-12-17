@@ -6,6 +6,8 @@ const envSchema = z.object({
 	REMNAWAVE_API_KEY: z.string(),
 	FREE_SQUAD_UUID: z.string(),
 	PAID_SQUAD_UUID: z.string(),
+	KEKSIK_CALLBACK_API_KEY: z.string(),
+	KEKSIK_CONFIRMATION_CODE: z.string(),
 });
 
 const env = envSchema.parse(Bun.env);
