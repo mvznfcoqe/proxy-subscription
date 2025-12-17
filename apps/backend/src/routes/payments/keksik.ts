@@ -24,7 +24,15 @@ const keksikCallbackSchema = z.object({
 
 export const paymentsKeksikRoute = new Hono().post(
 	"/",
-	zValidator("json", keksikCallbackSchema),
+	zValidator("json", keksikCallbackSchema, (result, ctx) => {
+		if (!result.success) {
+			logger.error(
+				`Keksik callback validation failed: ${JSON.stringify(result.error.issues)}`,
+			);
+
+			return ctx.status(400);
+		}
+	}),
 	async (ctx) => {
 		const { type, data } = ctx.req.valid("json");
 
