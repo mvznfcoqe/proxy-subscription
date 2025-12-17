@@ -42,6 +42,8 @@ services:
       REMNAWAVE_API_KEY: ${REMNAWAVE_API_KEY}
       FREE_SQUAD_UUID: ${FREE_SQUAD_UUID}
       PAID_SQUAD_UUID: ${PAID_SQUAD_UUID}
+      KEKSIK_CALLBACK_API_KEY: ${KEKSIK_CALLBACK_API_KEY}
+      KEKSIK_CONFIRMATION_CODE: ${KEKSIK_CONFIRMATION_CODE}
     depends_on:
       postgres:
         condition: service_healthy
