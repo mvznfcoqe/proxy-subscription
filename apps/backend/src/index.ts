@@ -6,6 +6,7 @@ import { user } from "./routes/user";
 import "./db";
 import { migrateDatabase } from "./lib/migrate";
 import "./api/remnawave";
+import { trimTrailingSlash } from "hono/trailing-slash";
 import { paymentsKeksikRoute } from "./routes/payments/keksik";
 
 await migrateDatabase();
@@ -14,6 +15,7 @@ const app = new Hono();
 
 app.use("*", logger());
 app.use("*", cors());
+app.use(trimTrailingSlash());
 
 const routes = app
 	.route("/user", user)
