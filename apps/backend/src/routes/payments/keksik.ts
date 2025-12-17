@@ -16,31 +16,28 @@ const keksikDonationSchema = z.object({
 });
 
 const keksikCallbackSchema = z.object({
-	account: z.number(),
+	account: z.number().optional(),
 	type: z.enum(["confirmation", "new_donate"]),
 	data: z.array(keksikDonationSchema).optional(),
-	hash: z.string(),
+	hash: z.string().optional(),
 });
 
-export const paymentsKeksikRoute = new Hono().post("/", async (ctx) => {
-	console.log(ctx);
-	console.log(await ctx.req.json());
-	console.log(await ctx.req.text());
-	console.log(await ctx.req.formData());
-	console.log(ctx.req.url);
-	console.log(await ctx.req.parseBody());
-	console.log(ctx.req.raw);
-	// const { type, data } = ctx.req.valid("form");
+export const paymentsKeksikRoute = new Hono().post(
+	"/",
+	zValidator("json", keksikCallbackSchema),
+	async (ctx) => {
+		const { type, data } = ctx.req.valid("json");
 
-	// if (type === "confirmation") {
-	// 	return ctx.json({ status: "ok", code: env.KEKSIK_CONFIRMATION_CODE });
-	// }
+		if (type === "confirmation") {
+			return ctx.json({ status: "ok", code: env.KEKSIK_CONFIRMATION_CODE });
+		}
 
-	// if (type === "new_donate") {
-	// 	logger.info(`Received new donation from Keksik: ${JSON.stringify(data)}`);
+		if (type === "new_donate") {
+			logger.info(`Received new donation from Keksik: ${JSON.stringify(data)}`);
 
-	// 	return ctx.json({ status: "ok" });
-	// }
+			return ctx.json({ status: "ok" });
+		}
 
-	return ctx.json({ status: "ok" });
-});
+		return ctx.json({ status: "ok" });
+	},
+);
