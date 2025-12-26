@@ -1,5 +1,13 @@
 import { DisabledReason, SubscriptionStatus } from "@sub/shared";
-import { bigint, pgEnum, pgTable, serial, text } from "drizzle-orm/pg-core";
+import {
+	bigint,
+	pgEnum,
+	pgTable,
+	serial,
+	text,
+	timestamp,
+	uuid,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export { DisabledReason, SubscriptionStatus };
@@ -20,12 +28,14 @@ export const disabledReasonEnum = pgEnum("disabled_reason", [
 export const users = pgTable("users", {
 	id: serial("id").primaryKey().notNull(),
 	subscriptionId: bigint("subscription_id", { mode: "number" }).unique(),
+	subscriptionUUID: uuid("subscription_uuid").unique(),
 	username: text("username").notNull().unique(),
 	telegramId: bigint("telegram_id", { mode: "number" }).notNull().unique(),
 	subscriptionStatus: subscriptionStatusEnum("subscription_status")
 		.notNull()
 		.default(SubscriptionStatus.INITIAL),
 	disabledReason: disabledReasonEnum("disabled_reason"),
+	disabledDate: timestamp("disabled_date"),
 });
 
 export type User = typeof users.$inferSelect;

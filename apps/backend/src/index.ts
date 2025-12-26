@@ -8,6 +8,7 @@ import { migrateDatabase } from "./lib/migrate";
 import "./api/remnawave";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { paymentsKeksikRoute } from "./routes/payments/keksik";
+import "./jobs/remove-unsubscribers";
 
 await migrateDatabase();
 

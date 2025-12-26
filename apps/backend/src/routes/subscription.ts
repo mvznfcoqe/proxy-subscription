@@ -69,7 +69,10 @@ export const subscription = new Hono()
 
 		await db
 			.update(users)
-			.set({ subscriptionId: createdSubscription.id })
+			.set({
+				subscriptionId: createdSubscription.id,
+				subscriptionUUID: createdSubscription.uuid,
+			})
 			.where(eq(users.id, user.id));
 
 		ctx.status(201);

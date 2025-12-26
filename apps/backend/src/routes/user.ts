@@ -38,6 +38,7 @@ export const user = new Hono()
 				telegramId: telegramId,
 				username: telegramId.toString(),
 				subscriptionId: subscription?.id,
+				subscriptionUUID: subscription?.uuid,
 				subscriptionStatus: isUserHasValidSubscription
 					? SubscriptionStatus.ACTIVE
 					: SubscriptionStatus.INITIAL,
@@ -101,7 +102,14 @@ export const user = new Hono()
 
 			await db
 				.update(users)
-				.set({ subscriptionStatus, disabledReason })
+				.set({
+					subscriptionStatus,
+					disabledReason,
+					disabledDate:
+						subscriptionStatus === SubscriptionStatus.DISABLED
+							? new Date()
+							: null,
+				})
 				.where(eq(users.id, foundUser.id));
 
 			return ctx.json({ success: true });
