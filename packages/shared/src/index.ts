@@ -10,3 +10,8 @@ export enum DisabledReason {
 	UNSUBSCRIBED = "unsubscribed",
 	FRAUD = "fraud",
 }
+
+export enum Level {
+	FREE = "free",
+	PAID = "paid",
+}

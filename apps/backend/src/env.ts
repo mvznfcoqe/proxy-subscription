@@ -9,6 +9,7 @@ const envSchema = z.object({
 	PAID_SQUAD_UUID: z.string(),
 	KEKSIK_CALLBACK_API_KEY: z.string(),
 	KEKSIK_CONFIRMATION_CODE: z.string(),
+	SUM_FOR_MONTH: z.coerce.number(),
 });
 
 const env = envSchema.parse(Bun.env);

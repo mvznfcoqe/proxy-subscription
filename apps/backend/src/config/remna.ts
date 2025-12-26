@@ -1,11 +1,12 @@
+import { Level } from "@sub/shared";
 import { env } from "~/env";
 
-export const Levels = {
-	free: env.FREE_SQUAD_UUID,
-	paid: env.PAID_SQUAD_UUID,
+export const SquadByLevel = {
+	[Level.FREE]: env.FREE_SQUAD_UUID,
+	[Level.PAID]: env.PAID_SQUAD_UUID,
 };
 
 export const DataLimitBySqualLevel = {
-	free: 100,
-	paid: 1200,
+	[Level.FREE]: 100,
+	[Level.PAID]: 1200,
 } as const;

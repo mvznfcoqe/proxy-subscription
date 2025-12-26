@@ -103,6 +103,8 @@ export const user = new Hono()
 			await db
 				.update(users)
 				.set({
+					subscriptionId: userSubscription?.id,
+					subscriptionUUID: userSubscription?.uuid,
 					subscriptionStatus,
 					disabledReason,
 					disabledDate:

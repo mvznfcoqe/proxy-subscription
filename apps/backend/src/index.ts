@@ -9,6 +9,7 @@ import "./api/remnawave";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { paymentsKeksikRoute } from "./routes/payments/keksik";
 import "./jobs/remove-unsubscribers";
+import "./jobs/downgrade-expired-users";
 
 await migrateDatabase();
 

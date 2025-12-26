@@ -22,6 +22,13 @@
       "when": 1766714396008,
       "tag": "0002_slippery_sage",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1766760916275,
+      "tag": "0003_sharp_blue_shield",
+      "breakpoints": true
     }
   ]
 }

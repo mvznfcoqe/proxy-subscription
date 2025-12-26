@@ -1,9 +1,4 @@
-import {
-	usersControllerGetUserByTelegramId,
-	usersControllerResetUserTraffic,
-	usersControllerUpdateUser,
-} from "~/api/generated/remnawave";
-import { DataLimitBySqualLevel, Levels } from "~/config/remna";
+import { usersControllerGetUserByTelegramId } from "~/api/generated/remnawave";
 
 export const getSubscriptionByTelegramId = async (telegramId: number) => {
 	const { data, error } = await usersControllerGetUserByTelegramId({
@@ -21,40 +16,4 @@ export const getSubscriptionByTelegramId = async (telegramId: number) => {
 	}
 
 	return foundUser;
-};
-
-export const setSubscriptionLevel = async ({
-	level,
-	telegramId,
-}: {
-	level: keyof typeof Levels;
-	telegramId: number;
-}) => {
-	const subscription = await getSubscriptionByTelegramId(telegramId);
-
-	if (!subscription) return;
-
-	const dataLimit = DataLimitBySqualLevel[level];
-	const squadUUID = Levels[level];
-
-	const paidExpireDate = new Date();
-	paidExpireDate.setDate(paidExpireDate.getDate() + 30);
-
-	const expireDate =
-		level === Levels.free
-			? new Date("2099").toISOString()
-			: paidExpireDate.toISOString();
-
-	await usersControllerResetUserTraffic({
-		path: { uuid: subscription.uuid },
-	});
-
-	await usersControllerUpdateUser({
-		body: {
-			uuid: subscription.uuid,
-			trafficLimitBytes: dataLimit * 1024 ** 3,
-			activeInternalSquads: [squadUUID],
-			expireAt: expireDate,
-		},
-	});
 };

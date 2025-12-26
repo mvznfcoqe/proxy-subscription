@@ -1,0 +1,155 @@
+{
+  "id": "faddfef3-14d0-4e28-a193-b195623baef3",
+  "prevId": "89ea62b2-67c4-478f-a7c0-46c460206a74",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "subscription_id": {
+          "name": "subscription_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "subscription_uuid": {
+          "name": "subscription_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telegram_id": {
+          "name": "telegram_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subscription_status": {
+          "name": "subscription_status",
+          "type": "subscription_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'initial'"
+        },
+        "disabled_reason": {
+          "name": "disabled_reason",
+          "type": "disabled_reason",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disabled_date": {
+          "name": "disabled_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "level": {
+          "name": "level",
+          "type": "level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'free'"
+        },
+        "level_expire_date": {
+          "name": "level_expire_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2099-01-01 00:00:00.000'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_subscription_id_unique": {
+          "name": "users_subscription_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "subscription_id"
+          ]
+        },
+        "users_subscription_uuid_unique": {
+          "name": "users_subscription_uuid_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "subscription_uuid"
+          ]
+        },
+        "users_username_unique": {
+          "name": "users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        },
+        "users_telegram_id_unique": {
+          "name": "users_telegram_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "telegram_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.disabled_reason": {
+      "name": "disabled_reason",
+      "schema": "public",
+      "values": [
+        "unsubscribed",
+        "fraud"
+      ]
+    },
+    "public.level": {
+      "name": "level",
+      "schema": "public",
+      "values": [
+        "free",
+        "paid"
+      ]
+    },
+    "public.subscription_status": {
+      "name": "subscription_status",
+      "schema": "public",
+      "values": [
+        "initial",
+        "waiting",
+        "active",
+        "disabled",
+        "rejected"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

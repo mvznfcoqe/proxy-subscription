@@ -3,9 +3,9 @@ import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
 import { usersControllerCreateUser } from "~/api/generated/remnawave";
-import { DataLimitBySqualLevel, Levels } from "~/config/remna";
+import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
 import { db } from "~/db";
-import { selectUserSchema, users } from "~/db/schema";
+import { Level, selectUserSchema, users } from "~/db/schema";
 import { getSubscriptionByTelegramId } from "~/services/subscription";
 import { getUserById } from "~/services/user";
 
@@ -38,8 +38,6 @@ export const subscription = new Hono()
 		return ctx.json(foundSubscription);
 	})
 	.post("/", zValidator("json", createSubscriptionSchema), async (ctx) => {
-		const expireAt = new Date("2099");
-
 		const { id } = ctx.req.valid("json");
 
 		const user = await getUserById(id);
@@ -48,13 +46,15 @@ export const subscription = new Hono()
 			return ctx.json({ message: "User not found" }, 404);
 		}
 
+		const squadUUID = SquadByLevel[Level.FREE];
+
 		const { data, error } = await usersControllerCreateUser({
 			body: {
-				expireAt: expireAt.toISOString(),
+				expireAt: new Date("2099").toISOString(),
 				status: "ACTIVE",
 				username: user.telegramId.toString().slice(0, 36),
 				telegramId: user.telegramId,
-				activeInternalSquads: [Levels.free],
+				activeInternalSquads: [squadUUID],
 				trafficLimitBytes: DataLimitBySqualLevel.free * 1024 ** 3,
 				trafficLimitStrategy: "MONTH",
 				shortUuid: nanoid(128),
