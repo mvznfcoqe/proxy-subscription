@@ -1,5 +1,5 @@
 import { env } from "~/env";
-import { client } from "./generated/remnawave/client.gen";
+import { client } from "./generated/client.gen";
 
 client.setConfig({
 	baseUrl: env.REMNAWAVE_PANEL_URL,

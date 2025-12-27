@@ -4,7 +4,7 @@ import {
 	usersBulkActionsControllerBulkResetUserTraffic,
 	usersBulkActionsControllerBulkUpdateUsers,
 	usersBulkActionsControllerBulkUpdateUsersInternalSquads,
-} from "~/api/generated/remnawave";
+} from "~/api/remnawave/generated";
 import { connection } from "~/config/redis";
 import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
 import { db } from "~/db";

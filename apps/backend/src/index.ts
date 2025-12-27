@@ -5,7 +5,7 @@ import { subscription } from "./routes/subscription";
 import { user } from "./routes/user";
 import "./db";
 import { migrateDatabase } from "./lib/migrate";
-import "./api/remnawave";
+import "./api/remnawave/remnawave";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { paymentsKeksikRoute } from "./routes/payments/keksik";
 import "./jobs/remove-unsubscribers";

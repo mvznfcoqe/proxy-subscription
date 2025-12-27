@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { SubscriptionStatus } from "@sub/shared";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { usersControllerUpdateUser } from "~/api/generated/remnawave";
+import { usersControllerUpdateUser } from "~/api/remnawave/generated";
 import { db } from "~/db";
 import { insertUserSchema, selectUserSchema, users } from "~/db/schema";
 import { getSubscriptionByTelegramId } from "~/services/subscription";

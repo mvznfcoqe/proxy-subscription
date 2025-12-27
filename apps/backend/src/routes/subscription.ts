@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
-import { usersControllerCreateUser } from "~/api/generated/remnawave";
+import { usersControllerCreateUser } from "~/api/remnawave/generated";
 import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
 import { db } from "~/db";
 import { Level, selectUserSchema, users } from "~/db/schema";

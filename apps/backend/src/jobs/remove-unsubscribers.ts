@@ -2,7 +2,7 @@ import { DisabledReason, SubscriptionStatus } from "@sub/shared";
 import { Queue, Worker } from "bullmq";
 import { and, eq, inArray, isNotNull, lt } from "drizzle-orm";
 import { Temporal } from "temporal-polyfill";
-import { usersBulkActionsControllerBulkDeleteUsers } from "~/api/generated/remnawave";
+import { usersBulkActionsControllerBulkDeleteUsers } from "~/api/remnawave/generated";
 import { connection } from "~/config/redis";
 import { db } from "~/db";
 import { users } from "~/db/schema";

@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import {
 	usersControllerResetUserTraffic,
 	usersControllerUpdateUser,
-} from "~/api/generated/remnawave";
+} from "~/api/remnawave/generated";
 import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
 import { db } from "~/db";
 import { type Level, users } from "~/db/schema";

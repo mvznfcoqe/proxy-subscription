@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import z from "zod";
 import { env } from "~/env";
 import { logger } from "~/logger";
+import { sendDonationNotification } from "~/services/notification";
 import { setUserSubscriptionLevel } from "~/services/user";
 
 const keksikDonationSchema = z.object({
@@ -43,6 +44,10 @@ export const paymentsKeksikRoute = new Hono().post(
 				level: Level.PAID,
 				telegramId: data.user,
 				levelExpireDate: paidExpireDate,
+			});
+
+			sendDonationNotification({
+				telegramId: data.user,
 			});
 
 			return ctx.json({ status: "ok" });

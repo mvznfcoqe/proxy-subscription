@@ -1,4 +1,5 @@
 import { Bot } from "grammy";
+import { Hono } from "hono";
 import { donate } from "./commands/donate.ts";
 import { getUserSubscription } from "./commands/get-subscription.ts";
 import { env } from "./env.ts";
@@ -6,8 +7,9 @@ import { logger } from "./logger.ts";
 import { userApprovalMenu } from "./menu/approval-menu.ts";
 import { handleChatMembersChanged } from "./middleware/chat-member.ts";
 import { userSubscribedAndAccepted } from "./middleware/subscribed-and-accepted.ts";
+import { webhookRoute } from "./routes/webhook.ts";
 
-const bot = new Bot(env.BOT_TOKEN);
+export const bot = new Bot(env.BOT_TOKEN);
 
 bot.on("chat_member", handleChatMembersChanged);
 bot.use(userApprovalMenu);
@@ -35,3 +37,16 @@ bot.catch((err) => {
 bot.start({
 	allowed_updates: ["message", "chat_member", "callback_query"],
 });
+
+logger.info("Grammy bot started with polling");
+
+const app = new Hono();
+
+app.route("/webhook", webhookRoute);
+
+Bun.serve({
+	port: env.BOT_PORT,
+	fetch: app.fetch,
+});
+
+logger.info({ port: env.BOT_PORT }, "Bot webhook server started");
