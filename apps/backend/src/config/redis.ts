@@ -1,5 +1,5 @@
 import IORedis from "ioredis";
-import { env } from "~/env";
+import { env } from "@/env";
 
 const { hostname } = new URL(env.REDIS_URL);
 

@@ -37,13 +37,16 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: ${REDIS_URL}
       REMNAWAVE_PANEL_URL: ${REMNAWAVE_PANEL_URL}
       REMNAWAVE_API_KEY: ${REMNAWAVE_API_KEY}
       FREE_SQUAD_UUID: ${FREE_SQUAD_UUID}
       PAID_SQUAD_UUID: ${PAID_SQUAD_UUID}
       KEKSIK_CALLBACK_API_KEY: ${KEKSIK_CALLBACK_API_KEY}
       KEKSIK_CONFIRMATION_CODE: ${KEKSIK_CONFIRMATION_CODE}
+      SUM_FOR_MONTH: ${SUM_FOR_MONTH}
+      BOT_WEBHOOK_API_KEY: ${BOT_WEBHOOK_API_KEY}
+      BOT_API_URL: ${BOT_API_URL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -59,7 +62,10 @@ services:
       ADMIN_ID: ${ADMIN_ID}
       CHANNEL_ID: ${CHANNEL_ID}
       CHANNEL_LINK: ${CHANNEL_LINK}
-      BACKEND_URL: http://backend:3000
+      BACKEND_URL: ${BACKEND_URL}
+      DONATE_BOT_USERNAME: ${DONATE_BOT_USERNAME}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      BOT_WEBHOOK_API_KEY: ${BOT_WEBHOOK_API_KEY}
     depends_on:
       - backend
 

@@ -1,4 +1,4 @@
-import { usersControllerGetUserByTelegramId } from "~/api/remnawave/generated";
+import { usersControllerGetUserByTelegramId } from "@/api/remnawave/generated";
 
 export const getSubscriptionByTelegramId = async (telegramId: number) => {
 	const { data, error } = await usersControllerGetUserByTelegramId({

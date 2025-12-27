@@ -4,12 +4,12 @@ import {
 	usersBulkActionsControllerBulkResetUserTraffic,
 	usersBulkActionsControllerBulkUpdateUsers,
 	usersBulkActionsControllerBulkUpdateUsersInternalSquads,
-} from "~/api/remnawave/generated";
-import { connection } from "~/config/redis";
-import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
-import { db } from "~/db";
-import { Level, users } from "~/db/schema";
-import { logger } from "~/logger";
+} from "@/api/remnawave/generated";
+import { connection } from "@/config/redis";
+import { DataLimitBySqualLevel, SquadByLevel } from "@/config/remna";
+import { db } from "@/db";
+import { Level, users } from "@/db/schema";
+import { logger } from "@/logger";
 
 const key = "downgrade-expired-users";
 

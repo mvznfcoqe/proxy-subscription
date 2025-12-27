@@ -2,12 +2,12 @@ import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
-import { usersControllerCreateUser } from "~/api/remnawave/generated";
-import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
-import { db } from "~/db";
-import { Level, selectUserSchema, users } from "~/db/schema";
-import { getSubscriptionByTelegramId } from "~/services/subscription";
-import { getUserById } from "~/services/user";
+import { usersControllerCreateUser } from "@/api/remnawave/generated";
+import { DataLimitBySqualLevel, SquadByLevel } from "@/config/remna";
+import { db } from "@/db";
+import { Level, selectUserSchema, users } from "@/db/schema";
+import { getSubscriptionByTelegramId } from "@/services/subscription";
+import { getUserById } from "@/services/user";
 
 const createSubscriptionSchema = selectUserSchema.pick({
 	id: true,

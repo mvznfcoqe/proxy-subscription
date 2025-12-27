@@ -2,10 +2,10 @@ import { eq } from "drizzle-orm";
 import {
 	usersControllerResetUserTraffic,
 	usersControllerUpdateUser,
-} from "~/api/remnawave/generated";
-import { DataLimitBySqualLevel, SquadByLevel } from "~/config/remna";
-import { db } from "~/db";
-import { type Level, users } from "~/db/schema";
+} from "@/api/remnawave/generated";
+import { DataLimitBySqualLevel, SquadByLevel } from "@/config/remna";
+import { db } from "@/db";
+import { type Level, users } from "@/db/schema";
 import { getSubscriptionByTelegramId } from "./subscription";
 
 export const getUserById = async (id: number) => {

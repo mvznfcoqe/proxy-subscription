@@ -1,5 +1,5 @@
-import { sendDonationInfo } from "~/api/bot/webhook/donation";
-import { logger } from "~/logger";
+import { sendDonationInfo } from "@/api/bot/webhook/donation";
+import { logger } from "@/logger";
 
 export async function sendDonationNotification({
 	telegramId,

@@ -1,4 +1,4 @@
-import { env } from "~/env";
+import { env } from "@/env";
 import { client } from "./generated/client.gen";
 
 client.setConfig({

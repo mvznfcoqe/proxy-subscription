@@ -2,10 +2,10 @@ import { zValidator } from "@hono/zod-validator";
 import { Level } from "@sub/shared";
 import { Hono } from "hono";
 import z from "zod";
-import { env } from "~/env";
-import { logger } from "~/logger";
-import { sendDonationNotification } from "~/services/notification";
-import { setUserSubscriptionLevel } from "~/services/user";
+import { env } from "@/env";
+import { logger } from "@/logger";
+import { sendDonationNotification } from "@/services/notification";
+import { setUserSubscriptionLevel } from "@/services/user";
 
 const keksikDonationSchema = z.object({
 	id: z.number(),

@@ -1,5 +1,5 @@
 import { Level } from "@sub/shared";
-import { env } from "~/env";
+import { env } from "@/env";
 
 export const SquadByLevel = {
 	[Level.FREE]: env.FREE_SQUAD_UUID,

@@ -22,7 +22,7 @@
 		"types": ["bun-types"],
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./src/*"],
+			"@/*": ["./src/*"],
 			"@sub/bot/*": ["../bot/src/*"]
 		}
 	}
