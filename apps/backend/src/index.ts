@@ -1,11 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { migrateDatabase } from "./lib/migrate";
 import { subscription } from "./routes/subscription";
 import { user } from "./routes/user";
-import "./db";
-import { migrateDatabase } from "./lib/migrate";
-import "./api/remnawave/remnawave";
+import "./api/remnawave";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { paymentsKeksikRoute } from "./routes/payments/keksik";
 import "./jobs/remove-unsubscribers";

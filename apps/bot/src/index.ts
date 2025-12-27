@@ -42,7 +42,7 @@ logger.info("Grammy bot started with polling");
 
 const app = new Hono();
 
-app.route("/webhook", webhookRoute);
+const routes = app.route("/webhook", webhookRoute);
 
 Bun.serve({
 	port: env.BOT_PORT,
@@ -50,3 +50,5 @@ Bun.serve({
 });
 
 logger.info({ port: env.BOT_PORT }, "Bot webhook server started");
+
+export type AppType = typeof routes;

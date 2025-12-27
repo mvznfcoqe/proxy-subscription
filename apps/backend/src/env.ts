@@ -10,7 +10,7 @@ const envSchema = z.object({
 	KEKSIK_CALLBACK_API_KEY: z.string(),
 	KEKSIK_CONFIRMATION_CODE: z.string(),
 	SUM_FOR_MONTH: z.coerce.number(),
-	BOT_WEBHOOK_URL: z.string(),
+	BOT_API_URL: z.string(),
 	BOT_WEBHOOK_API_KEY: z.string(),
 });
 

@@ -20,6 +20,7 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"types": ["bun-types"],
+		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
 			"@sub/backend/*": ["../backend/src/*"]

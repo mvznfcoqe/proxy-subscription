@@ -1,37 +1,26 @@
-import { ofetch } from "ofetch";
-import { env } from "~/env";
+import { sendDonationInfo } from "~/api/bot/webhook/donation";
 import { logger } from "~/logger";
 
-export interface DonationNotification {
+export async function sendDonationNotification({
+	telegramId,
+}: {
 	telegramId: number;
-}
-
-export async function sendDonationNotification(
-	notification: DonationNotification,
-) {
+}) {
 	try {
 		logger.info(
 			{
 				event: "sending_donation_notification",
-				telegramId: notification.telegramId,
+				telegramId: telegramId,
 			},
 			"Sending donation notification to bot",
 		);
 
-		await ofetch(env.BOT_WEBHOOK_URL, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"X-Api-Key": env.BOT_WEBHOOK_API_KEY,
-			},
-			body: notification,
-			timeout: 5000,
-		});
+		await sendDonationInfo({ json: { telegramId } });
 
 		logger.info(
 			{
 				event: "donation_notification_sent",
-				telegramId: notification.telegramId,
+				telegramId: telegramId,
 			},
 			"Donation notification sent successfully",
 		);
@@ -39,7 +28,7 @@ export async function sendDonationNotification(
 		logger.error(
 			{
 				event: "donation_notification_failed",
-				telegramId: notification.telegramId,
+				telegramId: telegramId,
 				error: error instanceof Error ? error.message : String(error),
 			},
 			"Failed to send donation notification to bot",
