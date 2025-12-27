@@ -1,9 +1,6 @@
 import { Menu } from "@grammyjs/menu";
 import { SubscriptionStatus } from "@sub/backend/types";
-import {
-	getUserByTelegramId,
-	updateSubscriptionStatus,
-} from "@/api/backend/user";
+import { getUserByTelegramId, updateSubscriptionStatus } from "@/api/backend";
 import { env } from "@/env";
 import { logger } from "@/logger";
 
@@ -47,7 +44,7 @@ export const userApprovalMenu = new Menu("user-approval-menu")
 
 		await ctx.api.sendMessage(
 			telegramId,
-			"Ваш аккаунт был активирован! Используйте /start для получения подписки.",
+			"Ваш аккаунт был активирован! Используйте /getsub для получения подписки.",
 		);
 		await ctx.editMessageText(`${textMessage}\nActive`, {
 			reply_markup: undefined,

@@ -1,6 +1,6 @@
 import type { User } from "@sub/backend/types";
+import { createUser, getUserByTelegramId } from "@/api/backend";
 import { isBackendError } from "@/api/backend/lib";
-import { createUser, getUserByTelegramId } from "@/api/backend/user";
 
 export const getOrCreateUserByTelegramId = async (
 	telegramId: User["telegramId"],

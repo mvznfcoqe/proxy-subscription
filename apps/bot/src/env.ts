@@ -6,6 +6,8 @@ const envSchema = z.object({
 	CHANNEL_ID: z.string(),
 	CHANNEL_LINK: z.string(),
 	BACKEND_URL: z.string(),
+	DONATE_BOT_USERNAME: z.string(),
+	ADMIN_USERNAME: z.string(),
 });
 
 const env = envSchema.parse(Bun.env);
