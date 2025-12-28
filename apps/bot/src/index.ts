@@ -2,6 +2,7 @@ import { Bot } from "grammy";
 import { Hono } from "hono";
 import { donate } from "./commands/donate.ts";
 import { getUserSubscription } from "./commands/get-subscription.ts";
+import { start } from "./commands/start.ts";
 import { env } from "./env.ts";
 import { logger } from "./logger.ts";
 import { userApprovalMenu } from "./menu/approval-menu.ts";
@@ -11,14 +12,17 @@ import { webhookRoute } from "./routes/webhook.ts";
 
 export const bot = new Bot(env.BOT_TOKEN);
 
-bot.on("chat_member", handleChatMembersChanged);
 bot.use(userApprovalMenu);
+
+bot.on("chat_member", handleChatMembersChanged);
+
+bot.command("start", start);
+
 bot.use(userSubscribedAndAccepted);
 
-bot.command("start", getUserSubscription);
 bot.command("getsub", getUserSubscription);
-bot.command("donate", donate);
 bot.on("message", getUserSubscription);
+bot.command("donate", donate);
 
 bot.catch((err) => {
 	logger.error(
