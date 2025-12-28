@@ -1,1 +1,0 @@
-export const VALIDATION_ERROR_CODE = 422;

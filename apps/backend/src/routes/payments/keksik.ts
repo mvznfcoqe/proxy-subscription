@@ -20,7 +20,7 @@ const keksikCallbackSchema = z.object({
 	hash: z.string().optional(),
 });
 
-export const paymentsKeksikRoute = new Hono().post(
+export const paymentsKeksik = new Hono().post(
 	"/",
 	zValidator("json", keksikCallbackSchema),
 	async (ctx) => {

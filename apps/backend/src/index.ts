@@ -6,9 +6,10 @@ import { subscription } from "./routes/subscription";
 import { user } from "./routes/user";
 import "./api/remnawave";
 import { trimTrailingSlash } from "hono/trailing-slash";
-import { paymentsKeksikRoute } from "./routes/payments/keksik";
+import { paymentsKeksik } from "./routes/payments/keksik";
 import "./jobs/remove-unsubscribers";
 import "./jobs/downgrade-expired-users";
+import { system } from "./routes/system";
 
 await migrateDatabase();
 
@@ -21,7 +22,8 @@ app.use(trimTrailingSlash());
 const routes = app
 	.route("/user", user)
 	.route("/subscription", subscription)
-	.route("/payments/keksik", paymentsKeksikRoute);
+	.route("/payments/keksik", paymentsKeksik)
+	.route("/system", system);
 
 export type AppType = typeof routes;
 

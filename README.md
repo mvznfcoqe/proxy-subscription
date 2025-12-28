@@ -2,7 +2,7 @@
 
 Telegram Bot that gives out free proxies for subscribing to my channel
 
-Live instance: @freecamsub_bot
+Live instance: https://t.me/freecamsub_bot
 
 ## Local Development
 
