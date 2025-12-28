@@ -21,8 +21,8 @@ bot.command("start", start);
 bot.use(userSubscribedAndAccepted);
 
 bot.command("getsub", getUserSubscription);
-bot.on("message", getUserSubscription);
 bot.command("donate", donate);
+bot.on("message", getUserSubscription);
 
 bot.catch((err) => {
 	logger.error(
